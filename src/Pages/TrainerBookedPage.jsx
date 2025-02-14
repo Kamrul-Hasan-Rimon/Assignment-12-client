@@ -2,6 +2,7 @@ import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const TrainerBookedPage = () => {
     const trainer = useLoaderData();
@@ -60,23 +61,30 @@ const TrainerBookedPage = () => {
                 packageName: selectedPackage.name,
                 packagePrice: selectedPackage.price,
                 userName: user?.displayName,
-                userEmail: user?.email 
+                userEmail: user?.email
             };
-    
+
             console.log("Sending Data:", requestData); // Log data before sending
-    
+
             try {
-                const response = await axios.post("http://localhost:4000/trainer/booking", requestData, {
-                    headers: { "Content-Type": "application/json" }
-                });
-    
+                const response = await axios.post("http://localhost:4000/trainer/booking", requestData
+                );
+                if (response.data.insertedId){
+                                Swal.fire({
+                                    title: "Success!",
+                                    text: "Successfully data inserted.",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                }
                 console.log("Response:", response.data);
             } catch (error) {
                 console.error("Error response:", error.response?.data || error.message);
             }
         }
     };
-    
+
     return (
         <div className="min-h-screen px-28 bg-gradient-to-br from-black via-gray-900 to-black py-12">
             <div className="container mx-auto px-4">

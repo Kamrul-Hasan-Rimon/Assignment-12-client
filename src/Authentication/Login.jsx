@@ -17,7 +17,9 @@ const Login = () => {
             Swal.fire({
                 title: "Success!",
                 text: "Successfully login.",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
             setLoading(false)
         } catch {
@@ -34,8 +36,15 @@ const Login = () => {
         try {
             const res = await googleSignIn();
             console.log(res)
-
+            Swal.fire({
+                title: "Success!",
+                text: "Successfully Google login.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
             navigate("/");
+
             toast.success('Successfully Google login')
         } catch (error) {
             toast.error("Google Sign-In failed:", error.message);

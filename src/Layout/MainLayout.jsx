@@ -4,7 +4,7 @@ import Footer from "../component/Footer";
 import  { Toaster } from 'react-hot-toast'
 const MainLayout = () => {
     return (
-        <div>
+        <div className="bg-gradient-to-r from-gray-900 to-gray-800">
             <Toaster  position="top-right" />
             <div>
                 <Navbar></Navbar>
