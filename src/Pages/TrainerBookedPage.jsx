@@ -77,6 +77,12 @@ const TrainerBookedPage = () => {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
+                }else{
+                          Swal.fire({
+                                    title: "Success!",
+                                    text: "Failed to insert data.",
+                                    icon: "error",
+                                });
                 }
                 console.log("Response:", response.data);
             } catch (error) {

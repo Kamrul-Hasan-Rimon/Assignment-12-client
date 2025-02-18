@@ -1,11 +1,57 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
+import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const RegistrationPage = () => {
-    const handleRegister = (e) => {
-        e.preventDefault();
-
+    const { register } = useContext(AuthContext);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const name = e.target.name.value;
+      const email = e.target.email.value;
+      const photoURL = e.target.photoUrl.value;
+      const password = e.target.password.value;
+  
+      // Password validation
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+      if (!passwordRegex.test(password)) {
+        setError(
+          "Password must contain at least 6 characters, one uppercase, and one lowercase letter."
+        );
+        return;
+      }
+  
+      try {
+        // Register user
+        const userCredential = await register(email, password);
+  
+        // Update profile with name and photoURL
+        await updateProfile(userCredential.user, {
+          displayName: name,
+          photoURL: photoURL,
+        });
+  
+        // Navigate to login page
+        navigate("/login");
+        Swal.fire({
+          title: "Success!",
+          text: "Successfully Registered.",
+          icon: "success",
+        });
+        
+      } catch (error) {
+        setError(error.message);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to register. Please try again.",
+          icon: "error",
+        });
+      }
     };
-
 
     return (
         <div className="bg-gradient-to-r from-indigo-900 to-blue-800 min-h-screen flex justify-center items-center">
@@ -15,8 +61,15 @@ const RegistrationPage = () => {
                     <i>FitTrac</i>
                 </div>
 
+                {/* Error Message */}
+                {error && (
+                    <p className="text-red-500 text-center font-medium">
+                        {error}
+                    </p>
+                )}
+
                 {/* Registration Form */}
-                <form onSubmit={handleRegister} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name Field */}
                     <div>
                         <label htmlFor="name" className="block text-lg font-semibold text-gray-700">Full Name</label>
@@ -79,7 +132,7 @@ const RegistrationPage = () => {
                 {/* Already have an account? */}
                 <div className="text-center text-sm text-gray-500 mt-4">
                     <span>Already have an account?</span> 
-                    <Link to="/login" className="text-blue-600 hover:text-blue-800">Login</Link>
+                    <Link to="/login" className="text-blue-600 hover:text-blue-800"> Login</Link>
                 </div>
             </div>
         </div>

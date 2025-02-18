@@ -9,6 +9,7 @@ import TrainerBookedPage from "../Pages/TrainerBookedPage";
 import ClassesPage from "../Pages/ClassesPage";
 import ErrorPage from "../Pages/ErrorPage";
 import PaymentPage from "../Pages/PaymentPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/trainers/:trainerId/book",
-        element: <TrainerBookedPage />,
+        element: <PrivateRoute><TrainerBookedPage /></PrivateRoute>,
         loader: async ({ params }) => {
           const response = await fetch(`http://localhost:4000/trainers/${params.trainerId}`);
           return response.json();
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/payment',
-        element:<PaymentPage></PaymentPage>
+        element:<PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>
       }
     ],
   },

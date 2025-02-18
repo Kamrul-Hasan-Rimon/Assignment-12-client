@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
   return (
@@ -18,7 +19,7 @@ export default function ErrorPage() {
           className="mt-6 inline-block px-6 py-3 text-lg font-semibold rounded-lg border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all duration-300 ease-in-out shadow-md"
           whileHover={{ scale: 1.1 }}
         >
-          <a href="/" className="block">Return Home</a>
+          <Link className="block">Return Home</Link>
         </motion.div>
       </motion.div>
     </div>
