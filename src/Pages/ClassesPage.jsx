@@ -154,7 +154,7 @@ const ClassesPage = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-20">
+        <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-28 py-20">
             <div className="container mx-auto px-4">
                 <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text text-center mb-16">
                     All Classes

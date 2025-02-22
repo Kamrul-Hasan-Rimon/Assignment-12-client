@@ -10,12 +10,13 @@ import ClassesPage from "../Pages/ClassesPage";
 import ErrorPage from "../Pages/ErrorPage";
 import PaymentPage from "../Pages/PaymentPage";
 import PrivateRoute from "./PrivateRoute";
+import BeATrainerPage from "../Pages/BeATrainerPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -43,8 +44,12 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: '/payment',
-        element:<PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>
+        path: '/payment/:id',
+        element: <PrivateRoute><PaymentPage></PaymentPage></PrivateRoute>,
+      },
+      {
+        path: '/BeATrainerPage',
+        element: <PrivateRoute><BeATrainerPage></BeATrainerPage></PrivateRoute>,
       }
     ],
   },

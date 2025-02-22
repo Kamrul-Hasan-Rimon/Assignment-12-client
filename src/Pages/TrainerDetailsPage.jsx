@@ -17,7 +17,7 @@ const TrainerDetailsPage = () => {
                         Join our elite team of fitness professionals and inspire others to achieve their goals. Share your expertise and make a difference in the fitness community.
                     </p>
                     <Link
-                        to="/become-a-trainer"
+                        to="/BeATrainerPage"
                         className="bg-gradient-to-r from-purple-600 to-cyan-600 px-10 py-4 rounded-full font-semibold text-white text-lg shadow-[0_0_25px_rgba(128,90,213,0.5)] hover:shadow-[0_0_35px_rgba(128,90,213,0.8)] transition-all duration-500"
                     >
                         Become a Trainer

@@ -39,7 +39,7 @@ const Navbar = () => {
                                 <img 
                                     src={user?.photoURL || '/default-profile.png'} 
                                     alt="Profile" 
-                                    className="w-12 h-12 rounded-full border-2 border-blue-500 shadow-lg hover:scale-110 transition-transform duration-300" 
+                                    className="w-12 h-12 object-cover rounded-full border-2 border-blue-500 shadow-lg hover:scale-110 transition-transform duration-300" 
                                 />
                                 <span className="text-lg font-semibold">{user?.name}</span>
                             </Link>
