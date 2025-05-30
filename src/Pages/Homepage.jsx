@@ -2,6 +2,7 @@ import AboutSection from '../component/AboutSection';
 import Banner from '../component/Banner';
 import FeaturedSection from '../component/FeaturedSection';
 import LatestPostsSection from '../component/LatestPostsSection';
+import Newsletter from '../component/Newsletter';
 
 const Homepage = () => {
     return (
@@ -10,6 +11,7 @@ const Homepage = () => {
             <FeaturedSection></FeaturedSection>
             <AboutSection></AboutSection>
             <LatestPostsSection></LatestPostsSection>
+            <Newsletter></Newsletter>
         </div>
     );
 };

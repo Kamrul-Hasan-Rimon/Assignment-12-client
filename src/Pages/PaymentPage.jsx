@@ -5,7 +5,7 @@ import PaymentForm from "../component/PaymentForm";
 
 
 // Load Stripe.js
-const stripePromise = loadStripe('');
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_STRIPE_GATEWAY);
 
 
 const PaymentPage = () => {

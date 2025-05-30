@@ -1,69 +1,115 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; 
+
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import axios from "axios";
 import Swal from "sweetalert2";
-import toast from 'react-hot-toast'
+
 const Login = () => {
     const { login, googleSignIn, setLoading } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = (e) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const handleAuthSuccess = async (email) => {
+        try {
+            // Generate JWT token
+            const tokenRes = await axios.post('http://localhost:4000/jwt', { email });
+            const token = tokenRes.data.token;
+            localStorage.setItem('token', token);
+
+            // Fetch user data with token
+            const userRes = await axios.get(`http://localhost:4000/users/${email}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const user = { email, role: userRes.data.data.role || 'member' };
+            console.log('User data:', user?.role);
+
+            return user;
+        } catch (error) {
+            if (error.response?.status === 404) {
+                // Create new user
+                await axios.post('http://localhost:4000/users', { email, role: 'member' });
+                // Retry fetching user data
+                const userRes = await axios.get(`http://localhost:4000/users/${email}`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                });
+                const user = { email, role: userRes.data.data.role || 'member' };
+                console.log('User data after creation:', user);
+                return user;
+            }
+            console.error('Error generating JWT or fetching user:', error); 
+            throw new Error(error.response?.data?.message || 'Failed to authenticate');
+        }
+    };
+
+    const handleLogin = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+
         try {
-            login(email, password);
-            navigate("/");
+            setLoading(true);
+            await login(email, password);
+            await handleAuthSuccess(email);
             Swal.fire({
                 title: "Success!",
-                text: "Successfully login.",
+                text: "Successfully logged in.",
                 icon: "success",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
             });
-            setLoading(false)
-        } catch {
+            navigate(from, { replace: true });
+        } catch (error) {
             Swal.fire({
-                title: "Success!",
-                text: "Failed to login.",
+                title: "Error!",
+                text: error.message || "Failed to login.",
                 icon: "error",
             });
-
+        } finally {
+            setLoading(false);
         }
-
     };
+
     const handleGoogleLogin = async () => {
         try {
-            const res = await googleSignIn();
-            console.log(res)
+            setLoading(true);
+            const result = await googleSignIn();
+            const email = result.user.email;
+            await handleAuthSuccess(email);
             Swal.fire({
                 title: "Success!",
-                text: "Successfully Google login.",
+                text: "Successfully logged in with Google.",
                 icon: "success",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
             });
-            navigate("/");
-
-            toast.success('Successfully Google login')
+            navigate(from, { replace: true });
         } catch (error) {
-            toast.error("Google Sign-In failed:", error.message);
+            Swal.fire({
+                title: "Error!",
+                text: error.message || "Failed to login with Google.",
+                icon: "error",
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="bg-gradient-to-r from-indigo-900 to-blue-800 min-h-screen flex justify-center items-center">
             <div className="bg-white rounded-xl shadow-2xl p-8 w-96 space-y-6">
-                {/* Logo or Branding */}
                 <div className="text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-900">
-                    <i>FitTrac</i>
+                    <i>FlexFit</i>
                 </div>
-
-                {/* Login Form */}
                 <form onSubmit={handleLogin} className="space-y-6">
-                    {/* Email Field */}
                     <div>
-                        <label htmlFor="email" className="block text-lg font-semibold text-gray-700">Email Address</label>
+                        <label htmlFor="email" className="block text-lg font-semibold text-gray-700">
+                            Email Address
+                        </label>
                         <input
                             type="email"
                             id="email"
@@ -73,38 +119,51 @@ const Login = () => {
                             placeholder="Enter your email"
                         />
                     </div>
-
-                    {/* Password Field */}
-                    <div>
-                        <label htmlFor="password" className="block text-lg font-semibold text-gray-700">Password</label>
+                    <div className="relative">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
                             required
-                            className="w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 transition-all duration-300"
+                            className="w-full p-3 mt-2 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-indigo-600 transition-all duration-300 pr-12 shadow-md hover:shadow-lg"
                             placeholder="Enter your password"
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute top-1/2 right-3 -translate-y-1/2 p-1 rounded-full bg-white shadow hover:bg-indigo-100 transition-all duration-300 ease-in-out scale-100 hover:scale-110"
+                            aria-label="Toggle password visibility"
+                        >
+                            {showPassword ? (
+                                <EyeSlashIcon className="h-5 w-5 text-indigo-700 transition-transform duration-300 rotate-0 hover:rotate-12" />
+                            ) : (
+                                <EyeIcon className="h-5 w-5 text-indigo-700 transition-transform duration-300 hover:rotate-12" />
+                            )}
+                        </button>
                     </div>
 
-                    {/* Login Button */}
+
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-blue-600 to-blue-900 text-white py-3 rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all duration-500">
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-900 text-white py-3 rounded-full font-semibold shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-500"
+                    >
                         Login
                     </button>
-                    {/* Google Login Button */}
                     <button
+                        type="button"
                         onClick={handleGoogleLogin}
-                        className="w-full bg-gradient-to-r from-red-500 to-red-700 text-white py-3 rounded-full font-semibold shadow-xl hover:shadow-2xl transition-all duration-500">
-                        Sign Up with Google
+                        className="w-full bg-gradient-to-r from-red-500 to-red-700 text-white py-3 rounded-full font-semibold shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-500"
+                    >
+                        Sign In with Google
                     </button>
                 </form>
-
-                {/* Register & Forgot Password Links */}
                 <div className="flex justify-between text-sm text-gray-500">
-                    <Link to="/forgot-password" className="hover:text-blue-600">Forgot Password?</Link>
-                    <Link to="/register" className="hover:text-blue-600">Create an Account</Link>
+                    <Link to="/forgot-password" className="hover:text-blue-600">
+                        Forgot Password?
+                    </Link>
+                    <Link to="/register" className="hover:text-blue-600">
+                        Create an Account
+                    </Link>
                 </div>
             </div>
         </div>

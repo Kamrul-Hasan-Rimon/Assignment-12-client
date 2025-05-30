@@ -86,7 +86,7 @@ const Banner = () => {
                 Connect with like-minded fitness enthusiasts and share your progress.
               </p>
               <Link
-                to={'/community'}
+                to={'/forumPage'}
                 className="btn mt-6 px-8 py-3 bg-gradient-to-r from-[#6A11CB] to-[#2575FC] text-white font-bold shadow-[0px_4px_20px_rgba(106,17,203,0.5)] rounded-full hover:scale-110 transition-all duration-500"
               >
                 Join Now

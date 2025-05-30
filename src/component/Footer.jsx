@@ -6,7 +6,7 @@ const Footer = () => {
                     {/* Column 1 - Logo and Description */}
                     <div className="space-y-6">
                         <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text">
-                            FitTrac
+                        FlexFit
                         </h2>
                         <p className="text-gray-300">
                             Empowering you to achieve your fitness goals with personalized plans, expert trainers, and cutting-edge technology.
@@ -84,7 +84,7 @@ const Footer = () => {
                             </li>
                             <li className="text-gray-300">
                                 <i className="fas fa-envelope mr-2 text-purple-400"></i>
-                                info@fittrac.com
+                                info@flexfit.com
                             </li>
                         </ul>
                     </div>
@@ -93,7 +93,7 @@ const Footer = () => {
                 {/* Bottom Section - Copyright */}
                 <div className="border-t border-gray-700 mt-12 pt-8 text-center">
                     <p className="text-gray-400">
-                        &copy; {new Date().getFullYear()} FitTrac. All rights reserved.
+                        &copy; {new Date().getFullYear()} FlexFit. All rights reserved.
                     </p>
                 </div>
             </div>

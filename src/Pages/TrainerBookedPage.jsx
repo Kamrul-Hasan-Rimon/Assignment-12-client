@@ -48,7 +48,7 @@ const TrainerBookedPage = () => {
     return (
         <div className="min-h-screen px-5 md:px-28 bg-gradient-to-br from-black via-gray-900 to-black py-12">
             <div className="container mx-auto px-4">
-                <h1 className="text-4xl md:text-6xl font-bold text-center mb-12 text-yellow-400">Book {trainer.name}</h1>
+                <h1 className="text-4xl md:text-6xl font-bold text-center mb-12 text-yellow-400">Book <span className="bg-gradient-to-r from-purple-400 to-cyan-400 text-transparent bg-clip-text"> {trainer.name}</span></h1>
 
                 <div className="bg-black/50 backdrop-blur-2xl rounded-3xl p-6 md:p-10 shadow-2xl border-2 border-yellow-500/20">
                     <h2 className="text-xl md:text-3xl font-semibold text-white mb-6">

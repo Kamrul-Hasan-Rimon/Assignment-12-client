@@ -19,7 +19,7 @@ const AboutSection = () => {
                             About Us
                         </h2>
                         <p className="text-lg text-gray-300">
-                            At <span className="font-semibold text-purple-400">FitTrac</span>, we are dedicated to helping you achieve your fitness goals with personalized plans, expert trainers, and cutting-edge technology. Our mission is to empower you to transform your body and mind through a holistic approach to fitness.
+                            At <span className="font-semibold text-purple-400">FlexFit</span>, we are dedicated to helping you achieve your fitness goals with personalized plans, expert trainers, and cutting-edge technology. Our mission is to empower you to transform your body and mind through a holistic approach to fitness.
                         </p>
                         <p className="text-lg text-gray-300">
                             With a team of certified trainers and state-of-the-art facilities, we provide a premium fitness experience tailored to your needs. Whether you're a beginner or a seasoned athlete, we have the tools and expertise to guide you every step of the way.
