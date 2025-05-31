@@ -11,6 +11,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_STRIPE_GATEWAY);
 const PaymentPage = () => {
   const location = useLocation();
   const bookingData = location.state;
+  console.log("Booking Data:", bookingData);
 
   if (!bookingData) {
     return (

@@ -10,6 +10,7 @@ const ProfilePage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,7 +34,6 @@ const ProfilePage = () => {
           profilePicture: userData.image || user.photoURL || "",
         });
       } catch (err) {
-        console.error("Error fetching user data:", err);
         setError(err.message || "Failed to load user data.");
       } finally {
         setLoading(false);
@@ -48,6 +48,8 @@ const ProfilePage = () => {
       ...prevData,
       [name]: value,
     }));
+    setSuccess(null);
+    setError(null);
   };
 
   const handleUpdateProfile = async () => {
@@ -56,32 +58,59 @@ const ProfilePage = () => {
         throw new Error("Name is required.");
       }
       await updateProfile(formData);
-      alert("Profile updated successfully!");
+      setSuccess("Profile updated successfully!");
+      setError(null);
     } catch (err) {
-      console.error("Error updating profile:", err);
       setError(err.message || "Failed to update profile.");
+      setSuccess(null);
     }
   };
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e]">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500"></div>
+      </div>
+    );
   }
 
   if (!user) {
-    return <div className="p-6">User not found. Please log in.</div>;
-  }
-
-  if (error) {
-    return <div className="p-6 text-red-500">{error}</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e]">
+        <div className="text-2xl text-white font-semibold">
+          User not found. Please log in.
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Profile</h1>
-      <div className="mt-4 p-4 bg-white shadow-md rounded-lg">
-        <form>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#23234b] to-[#0f3460] flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-2xl bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-10 flex flex-col items-center">
+        <div className="relative mb-8">
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-purple-500 via-cyan-400 to-blue-500 blur opacity-70"></div>
+          <img
+            src={
+              formData.profilePicture ||
+              "https://ui-avatars.com/api/?name=User&background=6d28d9&color=fff&size=256"
+            }
+            alt="Profile"
+            className="relative w-40 h-40 rounded-full border-8 border-white shadow-xl object-cover z-10"
+          />
+        </div>
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 mb-2">
+          {formData.name || "Your Name"}
+        </h1>
+        <p className="text-lg text-gray-300 mb-8">{user.email}</p>
+        <form
+          className="w-full max-w-lg bg-white/20 rounded-2xl p-8 shadow-lg border border-white/10"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdateProfile();
+          }}
+        >
+          <div className="mb-6">
+            <label className="block text-lg font-semibold text-gray-200 mb-2">
               Name
             </label>
             <input
@@ -89,11 +118,12 @@ const ProfilePage = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="w-full px-4 py-3 rounded-lg border border-purple-400 focus:border-cyan-400 bg-white/80 text-gray-900 font-medium shadow transition-all duration-300"
+              placeholder="Enter your name"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+          <div className="mb-6">
+            <label className="block text-lg font-semibold text-gray-200 mb-2">
               Profile Picture URL
             </label>
             <input
@@ -101,24 +131,34 @@ const ProfilePage = () => {
               name="profilePicture"
               value={formData.profilePicture}
               onChange={handleChange}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="w-full px-4 py-3 rounded-lg border border-purple-400 focus:border-cyan-400 bg-white/80 text-gray-900 font-medium shadow transition-all duration-300"
+              placeholder="Paste image URL"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+          <div className="mb-6">
+            <label className="block text-lg font-semibold text-gray-200 mb-2">
               Email
             </label>
             <input
               type="email"
               value={user.email}
               disabled
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-500 font-medium cursor-not-allowed"
             />
           </div>
+          {error && (
+            <div className="mb-4 text-red-500 font-semibold text-center">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mb-4 text-green-500 font-semibold text-center">
+              {success}
+            </div>
+          )}
           <button
-            type="button"
-            onClick={handleUpdateProfile}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            type="submit"
+            className="w-full py-3 mt-2 bg-gradient-to-r from-purple-600 via-cyan-500 to-blue-500 text-white font-bold rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
           >
             Update Profile
           </button>

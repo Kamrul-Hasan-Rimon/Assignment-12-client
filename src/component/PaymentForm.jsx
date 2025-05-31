@@ -76,7 +76,7 @@ const PaymentForm = ({ bookingData }) => {
                     timer: 2000,
                 });
 
-                navigate("/success", { state: { bookingId: bookingResponse.data.insertedId } });
+                // navigate("/success", { state: { bookingId: bookingResponse.data.insertedId } });
             }
         } catch (error) {
             console.error("Payment Error:", error.response?.data || error.message);

@@ -34,9 +34,12 @@ const TrainerBookedPage = () => {
         navigate(`/payment/${trainer._id}`, {
             state: {
                 trainerId: trainer._id,
+                bio: trainer.bio,
+                trainerImage: trainer.profileImage,
                 slotId: selectedSlot.slotId,
                 trainerName: trainer.name,
                 slotName: selectedSlot.slotName,
+                slotTime: selectedSlot.slotTime,
                 packageName: selectedPackage.name,
                 price: selectedPackage.price,
                 userName: user?.displayName,

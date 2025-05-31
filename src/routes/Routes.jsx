@@ -25,6 +25,8 @@ import AddForum from "../Layout/Dashboard/TrainerDashboard/TrainerSidebar/AddFor
 import axiosInstance from "../hooks/axiosInstance";
 import AllClasses from "../Layout/Dashboard/AdminDashboard/sideBarMenu/AllClasses";
 import ProfilePage from "../Layout/Dashboard/MemberDashboard/ProfilePage";
+import ActivityLog from "../Layout/Dashboard/MemberDashboard/ActivityLog";
+import BookedTrainer from "../Layout/Dashboard/MemberDashboard/BookedTrainer";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -100,6 +102,14 @@ const router = createBrowserRouter([
           {
             path: "member/profile",
             element: <ProfilePage />,
+          },
+          {
+            path: "member/activity-log",
+            element: <ActivityLog />,
+          },
+          {
+            path: "member/booked-trainer",
+            element: <BookedTrainer />,
           },
         ],
       },
