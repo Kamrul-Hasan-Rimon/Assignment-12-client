@@ -17,28 +17,28 @@ const Login = () => {
     const handleAuthSuccess = async (email) => {
         try {
             // Generate JWT token
-            const tokenRes = await axios.post('http://localhost:4000/jwt', { email });
+            const tokenRes = await axios.post('https://server-alpha-three.vercel.app/jwt', { email });
             const token = tokenRes.data.token;
             localStorage.setItem('token', token);
 
             // Fetch user data with token
-            const userRes = await axios.get(`http://localhost:4000/users/${email}`, {
+            const userRes = await axios.get(`https://server-alpha-three.vercel.app/users/${email}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const user = { email, role: userRes.data.data.role || 'member' };
-            console.log('User data:', user?.role);
+            // console.log('User data:', user?.role);
 
             return user;
         } catch (error) {
             if (error.response?.status === 404) {
                 // Create new user
-                await axios.post('http://localhost:4000/users', { email, role: 'member' });
+                await axios.post('https://server-alpha-three.vercel.app/users', { email, role: 'member' });
                 // Retry fetching user data
-                const userRes = await axios.get(`http://localhost:4000/users/${email}`, {
+                const userRes = await axios.get(`https://server-alpha-three.vercel.app/users/${email}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 const user = { email, role: userRes.data.data.role || 'member' };
-                console.log('User data after creation:', user);
+                // console.log('User data after creation:', user);
                 return user;
             }
             console.error('Error generating JWT or fetching user:', error); 

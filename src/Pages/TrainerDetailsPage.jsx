@@ -2,9 +2,9 @@ import { Link, useLoaderData, useParams } from "react-router-dom";
 
 const TrainerDetailsPage = () => {
     const trainer = useLoaderData();
-    console.log(trainer);
+    // console.log(trainer);
     const trainerid = useParams()
-    console.log(trainerid)
+    // console.log(trainerid)
 
     return (
         <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-28 text-white py-20">

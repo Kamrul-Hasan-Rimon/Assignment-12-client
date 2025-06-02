@@ -5,7 +5,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 const BookedTrainer = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-  console.log(bookings);
+//   console.log(bookings);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

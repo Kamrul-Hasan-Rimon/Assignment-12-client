@@ -15,7 +15,19 @@ const ForumPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`http://localhost:4000/trainers`);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found. Please log in.");
+      }
+      const response = await axios.get(
+        `http://localhost:4000/forum/posts`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Fetched posts:", response.data);
       if (response.data.success) {
         setPosts(response.data.posts || []);
         setTotalPages(response.data.totalPages || 1);
@@ -51,7 +63,7 @@ const ForumPage = () => {
       }
       setVotingPostId(postId);
       await axios.post(
-        `http://localhost:4000/forum/posts/${postId}/vote`,
+        `https://server-alpha-three.vercel.app/forum/posts/${postId}/vote`,
         {
           email: user.email,
           vote: vote,

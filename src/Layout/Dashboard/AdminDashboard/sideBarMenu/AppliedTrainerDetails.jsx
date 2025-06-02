@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const AppliedTrainerDetails = () => {
     const { id } = useParams();
-    console.log('Trainer ID:', id); // Line 8
+    // console.log('Trainer ID:', id); // Line 8
     const [trainer, setTrainer] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();

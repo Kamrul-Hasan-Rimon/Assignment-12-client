@@ -19,7 +19,7 @@ const ActivityLog = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setActivities(data.activities || []);
-        console.log("Activities fetched:", data);
+        // console.log("Activities fetched:", data);
       } catch (err) {
         setError(err.message || "Failed to load activity log.");
       } finally {

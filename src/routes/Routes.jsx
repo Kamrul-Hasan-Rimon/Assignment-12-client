@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <TrainerDetailsPage />,
         loader: async ({ params }) => {
           try {
-            const response = await fetch(`http://localhost:4000/trainers/${params.id}`);
+            const response = await fetch(`https://server-alpha-three.vercel.app/trainers/${params.id}`);
             if (!response.ok) throw new Error("Failed to fetch trainer details");
             return response.json();
           } catch (error) {
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute><TrainerBookedPage /></PrivateRoute>,
         loader: async ({ params }) => {
           try {
-            const response = await fetch(`http://localhost:4000/trainers/${params.trainerId}`);
+            const response = await fetch(`https://server-alpha-three.vercel.app/trainers/${params.trainerId}`);
             if (!response.ok) throw new Error("Failed to fetch trainer details");
             return response.json();
           } catch (error) {

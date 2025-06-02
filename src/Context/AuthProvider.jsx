@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
       try {
         if (currentUser?.email) {
           // Sync user data with backend
-          const response = await axios.post(`${import.meta.env.VITE_API_TOKEN}/users`, {
+          const response = await axios.post(`https://server-alpha-three.vercel.app/users`, {
             name: currentUser.displayName,
             image: currentUser.photoURL,
             email: currentUser.email,
@@ -35,7 +35,7 @@ export default function AuthProvider({ children }) {
 
           if (response.data.success) {
             const tokenResponse = await axios.post(
-              `${import.meta.env.VITE_API_TOKEN}/jwt`,
+              `https://server-alpha-three.vercel.app/jwt`,
               { email: currentUser.email }
             );
 
@@ -45,7 +45,7 @@ export default function AuthProvider({ children }) {
           }
         } else {
           localStorage.removeItem("token");
-          await axios.post(`${import.meta.env.VITE_API_TOKEN}/logout`);
+          await axios.post(`https://server-alpha-three.vercel.app/logout`);
         }
       } catch (error) {
         console.error("Auth state error:", error);
@@ -63,7 +63,7 @@ export default function AuthProvider({ children }) {
       setAuthLoading(true);
       await signOut(auth);
       localStorage.removeItem("token");
-      await axios.post(`${import.meta.env.VITE_API_TOKEN}/logout`);
+      await axios.post(`https://server-alpha-three.vercel.app/logout`);
     } catch (error) {
       console.error("Logout error:", error);
       throw new Error("Failed to logout. Please try again.");
@@ -143,7 +143,7 @@ export default function AuthProvider({ children }) {
       }
 
       // Sync updated profile with backend
-      const response = await axios.put(`${import.meta.env.VITE_API_TOKEN}/users`, {
+      const response = await axios.put(`https://server-alpha-three.vercel.app/users`, {
         name: updates.name || currentUser.displayName,
         image: updates.image || currentUser.photoURL,
         email: updates.email || currentUser.email,

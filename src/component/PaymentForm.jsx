@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 
 const PaymentForm = ({ bookingData }) => {
-    console.log(bookingData)
+    // console.log(bookingData)
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useNavigate();
@@ -15,12 +15,12 @@ const PaymentForm = ({ bookingData }) => {
         event.preventDefault();
 
         if (!stripe || !elements) {
-            console.log("Stripe or Elements not loaded.");
+            // console.log("Stripe or Elements not loaded.");
             return;
         }
 
         if (!bookingData || !bookingData.price) {
-            console.log("Invalid booking data:", bookingData);
+            // console.log("Invalid booking data:", bookingData);
             Swal.fire({
                 title: "Invalid Booking Data!",
                 text: "Please provide valid booking details.",
@@ -30,12 +30,12 @@ const PaymentForm = ({ bookingData }) => {
         }
 
         setLoading(true);
-        console.log("Starting payment process...");
+        // console.log("Starting payment process...");
 
         try {
             // Create a Payment Intent
-            console.log("Creating payment intent with amount:", bookingData.price);
-            const response = await axios.post("http://localhost:4000/create-payment-intent", {
+            // console.log("Creating payment intent with amount:", bookingData.price);
+            const response = await axios.post("https://server-alpha-three.vercel.app/create-payment-intent", {
                 amount: bookingData.price,
             });
 
@@ -56,11 +56,11 @@ const PaymentForm = ({ bookingData }) => {
             }
 
             if (paymentIntent.status === "succeeded") {
-                console.log("Payment succeeded. Payment intent:", paymentIntent);
+                // console.log("Payment succeeded. Payment intent:", paymentIntent);
 
                 // Save the booking data
-                console.log("Saving booking data to the server...");
-                const bookingResponse = await axios.post("http://localhost:4000/trainer/booking", {
+                // console.log("Saving booking data to the server...");
+                const bookingResponse = await axios.post("https://server-alpha-three.vercel.app/trainer/booking", {
                     ...bookingData,
                     paymentId: paymentIntent.id,
                     bookingDate: new Date(),
@@ -86,7 +86,7 @@ const PaymentForm = ({ bookingData }) => {
                 icon: "error",
             });
         } finally {
-            console.log("Payment process completed.");
+            // console.log("Payment process completed.");
             setLoading(false);
         }
     };

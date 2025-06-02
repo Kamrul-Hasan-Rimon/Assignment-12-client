@@ -9,8 +9,8 @@ const fetchTrainers = async () => {
   if (!token) {
     throw new Error("No token found. Please log in.");
   }
-  const { data } = await axios.get("http://localhost:4000/trainers");
-  console.log("Fetched trainers:", data);
+  const { data } = await axios.get("https://server-alpha-three.vercel.app/trainers");
+  // console.log("Fetched trainers:", data);
   return data.result || [];
 };
 

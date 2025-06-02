@@ -23,7 +23,7 @@ const ProfilePage = () => {
           throw new Error("No token found. Please log in.");
         }
         const response = await axios.get(
-          `http://localhost:4000/users/${user?.email}`,
+          `https://server-alpha-three.vercel.app/users/${user?.email}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

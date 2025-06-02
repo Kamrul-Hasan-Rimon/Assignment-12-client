@@ -11,7 +11,7 @@ const Newsletter = () => {
         const user = { name, email, subscribedAt };
     
         try {
-            const response = await axios.post("http://localhost:4000/subscribe", user);
+            const response = await axios.post("https://server-alpha-three.vercel.app/subscribe", user);
             if (response.data.success) {
                 Swal.fire({
                     title: "✅ Subscription Successful!",

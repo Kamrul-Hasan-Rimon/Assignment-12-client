@@ -153,10 +153,10 @@ const BeATrainerPage = () => {
         })),
         status: "pending",
       };
-      console.log(trainerData)
+      // console.log(trainerData)
       // Send data to backend
       const response = await axios.post(
-        "http://localhost:4000/applytrainer",
+        "https://server-alpha-three.vercel.app/applytrainer",
         trainerData
       );
 

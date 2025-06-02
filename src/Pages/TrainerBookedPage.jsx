@@ -5,7 +5,7 @@ import { AuthContext } from "../Context/AuthProvider";
 const TrainerBookedPage = () => {
     const navigate = useNavigate();
     const trainer = useLoaderData();
-    console.log(trainer)
+    // console.log(trainer)
     const [selectedPackage, setSelectedPackage] = useState(null);
     const { user } = useContext(AuthContext);
 

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 const PrivateRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useContext(AuthContext);
-  console.log("User data:", user?.role);
+  // console.log("User data:", user?.role);
 
   const location = useLocation();
 
