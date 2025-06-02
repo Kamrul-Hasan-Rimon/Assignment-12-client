@@ -113,7 +113,6 @@ This project is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) appli
     ```
     MONGODB_URI=mongodb+srv://<db_user>:<db_pass>@cluster0.vtrz9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
     JWT_SECRET=6e8b5f1c7a2d4e9b3c0a1f8d2e7c6b5a4f3e2d1c0b9a8e7d6c5b4a3f2e1d0c9b
-    STRIPE_SECRET_KEY=sk_test_51Quvpo5dC14J6R9rT2SnCp90asnMdCq4vuXI3KdtV5QKD1MY9ZWnadgo7PKiJLLq4CxVPmPQ9ltLYSow44vhOfBi00UMPsqFHa
     ```
 
     *   Start the server:
